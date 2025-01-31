@@ -5,13 +5,18 @@ from .utils import predecir, umap_transform, predecir_proba
 import json
 from langdetect import detect
 import os
-from openai import OpenAI
+# from openai import OpenAI
+from openai import AzureOpenAI
 import numpy as np
 from dotenv import load_dotenv
 
 load_dotenv()
-os.getenv('OPENAI_API_KEY')
-client = OpenAI()
+
+client = AzureOpenAI(
+    api_key=os.getenv("AZURE_OPENAI_API_KEY"), 
+    api_version="2023-05-15",
+    azure_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
+    )
 
 def get_embedding(text, model="text-embedding-3-large"):
    text = text.replace("\n", " ")
